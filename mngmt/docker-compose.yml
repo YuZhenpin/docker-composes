@@ -1,0 +1,18 @@
+version: '2'
+services:
+  mariadb:
+    image: 'bitnami/mariadb:latest'
+    environment:
+      - ALLOW_EMPTY_PASSWORD=yes
+    volumes:
+      - './mariadb_data:/bitnami'
+  redmine:
+    image: 'bitnami/redmine:latest'
+    labels:
+      kompose.service.type: nodeport
+    ports:
+      - '3000:3000'
+    volumes:
+      - './redmine_data:/bitnami'
+    depends_on:
+      - mariadb
